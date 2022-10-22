@@ -20,4 +20,5 @@ ext {
     ssp_version = "1.0.6"
     glide_version = "4.10.0"
     shimmer_version = "0.5.0"
+    mediaVersion = "1.0.0-alpha03"
 }
