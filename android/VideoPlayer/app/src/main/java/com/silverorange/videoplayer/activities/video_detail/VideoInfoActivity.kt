@@ -6,8 +6,12 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.util.Log
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import com.silverorange.videoplayer.activities.BaseActivity
 import com.silverorange.videoplayer.databinding.ActivityVideoDetailBinding
 
@@ -16,6 +20,7 @@ class VideoInfoActivity : BaseActivity() {
     private lateinit var viewModel: VideoInfoViewModel
 
     private var player: ExoPlayer? = null
+    private val playbackStateListener: Player.Listener = playbackStateListener()
 
     private var playWhenReady = true
     private var currentItem = 0
@@ -70,18 +75,26 @@ class VideoInfoActivity : BaseActivity() {
     }
 
     private fun initializePlayer() {
+        val trackSelector = DefaultTrackSelector(this).apply {
+            setParameters(buildUponParameters().setMaxVideoSizeSd())
+        }
         player = ExoPlayer.Builder(this)
+            .setTrackSelector(trackSelector)
             .build()
             .also { exoPlayer ->
                 viewBinding.videoView.player = exoPlayer
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.seekTo(currentItem, playbackPosition)
+                exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
             }
     }
 
     private fun initObserver() {
-        TODO("Not yet implemented")
+        viewModel.video.observe(this) { video ->
+            val mediaItem = MediaItem.fromUri(video.url)
+            player?.addMediaItem(mediaItem)
+        }
     }
 
     @SuppressLint("InlinedApi")
@@ -101,5 +114,18 @@ class VideoInfoActivity : BaseActivity() {
             exoPlayer.release()
         }
         player = null
+    }
+
+    private fun playbackStateListener() = object : Player.Listener {
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            val stateString: String = when (playbackState) {
+                ExoPlayer.STATE_IDLE -> "ExoPlayer.STATE_IDLE      -"
+                ExoPlayer.STATE_BUFFERING -> "ExoPlayer.STATE_BUFFERING -"
+                ExoPlayer.STATE_READY -> "ExoPlayer.STATE_READY     -"
+                ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
+                else -> "UNKNOWN_STATE             -"
+            }
+            Log.d(VideoInfoActivity::class.java.name, "changed state to $stateString")
+        }
     }
 }
