@@ -14,6 +14,7 @@ android {
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "SERVER_URL", '"http://localhost:4000/"'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,3 +38,9 @@ android {
 }
 
 apply from: "dependencies.gradle"
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+}

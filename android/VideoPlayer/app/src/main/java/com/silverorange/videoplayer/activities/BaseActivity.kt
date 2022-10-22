@@ -1,11 +1,12 @@
-package com.silverorange.videoplayer
+package com.silverorange.videoplayer.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dagger.android.AndroidInjection
 
-class MainActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        AndroidInjection.inject(this)
     }
 }
