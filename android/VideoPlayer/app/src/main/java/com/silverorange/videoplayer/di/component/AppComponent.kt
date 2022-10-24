@@ -2,9 +2,7 @@ package com.silverorange.videoplayer.di.component
 
 import android.app.Application
 import com.silverorange.videoplayer.VideoPlayerDE
-import com.silverorange.videoplayer.di.module.ActivityModule
-import com.silverorange.videoplayer.di.module.NetworkModule
-import com.silverorange.videoplayer.di.module.RepositoryModule
+import com.silverorange.videoplayer.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -18,6 +16,8 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AndroidSupportInjectionModule::class,
         ActivityModule::class,
+        ViewModelsFactoryModule::class,
+        ViewModelModule::class,
         NetworkModule::class,
         RepositoryModule::class
     ]

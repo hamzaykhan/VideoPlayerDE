@@ -26,5 +26,5 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(VideoInfoViewModel::class)
-    abstract fun bindHomeViewModel(viewModel: VideoInfoViewModel): ViewModel
+    abstract fun bindVideoInfoViewModel(viewModel: VideoInfoViewModel): ViewModel
 }

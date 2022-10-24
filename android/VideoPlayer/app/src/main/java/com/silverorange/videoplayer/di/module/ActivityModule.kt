@@ -6,6 +6,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivityModule {
+
     @ContributesAndroidInjector
-    abstract fun bindHomeActivity(): VideoInfoActivity
+    abstract fun bindVideoInfoActivity(): VideoInfoActivity
 }

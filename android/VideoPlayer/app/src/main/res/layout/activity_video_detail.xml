@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
 
     <data>
+
+        <import type="com.silverorange.videoplayer.activities.video_detail.NoInternet" />
+        <import type="com.silverorange.videoplayer.activities.video_detail.NoServer" />
+        <import type="com.silverorange.videoplayer.activities.video_detail.Content" />
+        <import type="com.silverorange.videoplayer.wrappers.Resource" />
         
         <variable
             name="viewmodel"
@@ -21,13 +27,22 @@
             android:layout_height="match_parent"
             tools:context=".activities.video_detail.VideoInfoActivity">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_percent="0.4"
+                android:orientation="horizontal"/>
+
             <androidx.media3.ui.PlayerView
                 android:id="@+id/video_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_220sdp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="0dp"
+                app:controller_layout_id="@layout/custom_exo_controller_view"
+                app:layout_constraintBottom_toBottomOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/title"
@@ -35,10 +50,12 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/video_view"
+                app:layout_constraintTop_toBottomOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:text="@{viewmodel.video.title}"
+                app:visible_flag="@{viewmodel.uiState instanceof Content}"
                 tools:text="My Cool Video Title" />
 
             <TextView
@@ -49,6 +66,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:text="@{viewmodel.video.authorName}"
+                app:visible_flag="@{viewmodel.uiState instanceof Content}"
                 tools:text="Mel Herbert" />
 
             <TextView
@@ -61,6 +80,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:text="@{viewmodel.video.description}"
+                app:visible_flag="@{viewmodel.uiState instanceof Content}"
                 tools:text="@string/large_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="NextButton" parent="ExoStyledControls.Button.Center.Next">
+        <item name="android:src">@drawable/next_drawable</item>
+    </style>
+
+    <style name="PlayPauseButton" parent="ExoStyledControls.Button.Center.PlayPause">
+        <item name="android:src">@drawable/play_drawable</item>
+    </style>
+
+    <style name="PreviousButton" parent="ExoStyledControls.Button.Center.Previous">
+        <item name="android:src">@drawable/previous_drawable</item>
+    </style>
 </resources>

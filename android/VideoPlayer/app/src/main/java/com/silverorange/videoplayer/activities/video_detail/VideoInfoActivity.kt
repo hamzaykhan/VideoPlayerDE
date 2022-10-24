@@ -2,6 +2,7 @@ package com.silverorange.videoplayer.activities.video_detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -12,10 +13,14 @@ import androidx.media3.common.util.Log
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
-import com.silverorange.videoplayer.activities.BaseActivity
 import com.silverorange.videoplayer.databinding.ActivityVideoDetailBinding
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
-class VideoInfoActivity : BaseActivity() {
+class VideoInfoActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var viewModelProvider: ViewModelProvider.Factory
 
     private lateinit var viewModel: VideoInfoViewModel
 
@@ -32,6 +37,7 @@ class VideoInfoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(viewBinding.root)
         viewModel = ViewModelProvider(this, viewModelProvider)[VideoInfoViewModel::class.java]
         viewBinding.viewmodel = viewModel
@@ -86,6 +92,7 @@ class VideoInfoActivity : BaseActivity() {
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.seekTo(currentItem, playbackPosition)
                 exoPlayer.addListener(playbackStateListener)
+                exoPlayer.playWhenReady = false
                 exoPlayer.prepare()
             }
     }
