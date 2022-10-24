@@ -20,9 +20,13 @@ class VideoInfoViewModel @Inject constructor(
     val uiState: LiveData<VideoInfoUiState>
         get() = _uiState
 
-    private val _video = MutableLiveData<Video>()
-    val video: LiveData<Video>
+    private val _video = MutableLiveData<List<Video>>()
+    val video: LiveData<List<Video>>
         get() = _video
+
+    private val _currentVideo = MutableLiveData<Video>()
+    val currentVideo: LiveData<Video>
+        get() = _currentVideo
 
     init {
         getVideo()
@@ -50,5 +54,9 @@ class VideoInfoViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateMediaContent(pos: Int) {
+        _currentVideo.value = _video.value?.get(pos)
     }
 }

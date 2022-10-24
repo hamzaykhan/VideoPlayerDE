@@ -54,7 +54,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="@{viewmodel.video.title}"
+                android:text="@{viewmodel.currentVideo.title}"
                 app:visible_flag="@{viewmodel.uiState instanceof Content}"
                 tools:text="My Cool Video Title" />
 
@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="@{viewmodel.video.authorName}"
+                android:text="@{viewmodel.currentVideo.authorName}"
                 app:visible_flag="@{viewmodel.uiState instanceof Content}"
                 tools:text="Mel Herbert" />
 
@@ -80,7 +80,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="@{viewmodel.video.description}"
+                android:text="@{viewmodel.currentVideo.description}"
                 app:visible_flag="@{viewmodel.uiState instanceof Content}"
                 tools:text="@string/large_text" />
 

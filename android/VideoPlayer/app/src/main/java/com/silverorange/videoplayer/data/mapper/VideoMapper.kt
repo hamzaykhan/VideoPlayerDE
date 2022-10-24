@@ -7,8 +7,9 @@ object VideoMapper {
 
     fun convertResponseToVideo(videoResponse: VideoResponse): Video {
         return Video(
+            id = videoResponse.id,
             title = videoResponse.title,
-            url = videoResponse.hlsURL,
+            url = videoResponse.fullURL,
             description = videoResponse.description,
             authorName = videoResponse.author.name
         )

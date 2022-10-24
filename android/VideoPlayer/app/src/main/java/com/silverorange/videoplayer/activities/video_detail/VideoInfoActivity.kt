@@ -98,9 +98,12 @@ class VideoInfoActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.video.observe(this) { video ->
-            val mediaItem = MediaItem.fromUri(video.url)
-            player?.addMediaItem(mediaItem)
+        viewModel.video.observe(this) { videos ->
+            player?.clearMediaItems()
+            videos.forEach { video ->
+                val mediaItem = MediaItem.fromUri(video.url)
+                player?.addMediaItem(mediaItem)
+            }
         }
     }
 
@@ -128,7 +131,10 @@ class VideoInfoActivity : AppCompatActivity() {
             val stateString: String = when (playbackState) {
                 ExoPlayer.STATE_IDLE -> "ExoPlayer.STATE_IDLE      -"
                 ExoPlayer.STATE_BUFFERING -> "ExoPlayer.STATE_BUFFERING -"
-                ExoPlayer.STATE_READY -> "ExoPlayer.STATE_READY     -"
+                ExoPlayer.STATE_READY -> {
+                    viewModel.updateMediaContent(pos = player?.currentMediaItemIndex ?: 0)
+                    "ExoPlayer.STATE_READY     -"
+                }
                 ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
                 else -> "UNKNOWN_STATE             -"
             }

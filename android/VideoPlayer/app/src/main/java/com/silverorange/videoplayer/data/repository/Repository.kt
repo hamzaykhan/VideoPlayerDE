@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 interface Repository {
-    suspend fun getFirstVideo(): Flow<Resource<Video>>
+    suspend fun getFirstVideo(): Flow<Resource<List<Video>>>
 }
 
 class RepositoryImpl @Inject constructor(
@@ -22,7 +22,7 @@ class RepositoryImpl @Inject constructor(
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): Repository {
 
-    override suspend fun getFirstVideo(): Flow<Resource<Video>>  = flow {
+    override suspend fun getFirstVideo(): Flow<Resource<List<Video>>>  = flow {
         emit(Resource.Loading)
         callApi {
             apiService.getVideos()
@@ -32,7 +32,7 @@ class RepositoryImpl @Inject constructor(
                     val data = data!!.sortedByDescending { it.publishedAt.stringToDate() }.map { response ->
                         VideoMapper.convertResponseToVideo(response)
                     }
-                    emit(Resource.Success(data.first()))
+                    emit(Resource.Success(data))
                 }
 
                 is Resource.Error -> {
